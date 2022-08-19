@@ -5,16 +5,16 @@ namespace Sengoku_BountyAPI
 {
     public class Startup
     {
-        public IConfiguration configRoot
-        {
-            get;
-        }
+        private string _connectionString = null;
+        public IConfiguration Configroot { get; }
         public Startup(IConfiguration configuration)
         {
-            configRoot = configuration;
+            Configroot = configuration;
         }
         public void ConfigureServices(IServiceCollection services)
         {
+
+            _connectionString = Configroot["ConnectionStrings:Database"];
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy",
