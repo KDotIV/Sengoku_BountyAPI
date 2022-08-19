@@ -5,7 +5,7 @@ namespace Sengoku_BountyAPI
 {
     public class Startup
     {
-        private string _connectionString = null;
+        private string? _connectionString = null;
         public IConfiguration Configroot { get; }
         public Startup(IConfiguration configuration)
         {
@@ -14,12 +14,13 @@ namespace Sengoku_BountyAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            _connectionString = Configroot["ConnectionStrings:Database"];
+            _connectionString = Configroot.GetConnectionString("Database");
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy",
                     cors => cors.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
